@@ -1,0 +1,27 @@
+# 게시글 전체 조회
+GET http://localhost:3000/board
+
+###
+
+# 게시글 하나 가져오기
+GET http://localhost:3000/board/1
+
+###
+
+POST http://localhost:3000/board
+content-Type: application/application/json
+
+{
+    "name": "Charlie",
+    "contents": "Contents 4"
+}
+
+###
+
+PUT http://localhost:3000/board/3
+content-Type: application/application/json
+
+{
+    "name": "David",
+    "contents": "Contents changed"
+}
