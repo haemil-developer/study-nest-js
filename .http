@@ -9,7 +9,7 @@ GET http://localhost:3000/board/1
 ###
 
 POST http://localhost:3000/board
-content-Type: application/application/json
+content-Type: application/json
 
 {
     "name": "Charlie",
@@ -19,7 +19,7 @@ content-Type: application/application/json
 ###
 
 PUT http://localhost:3000/board/3
-content-Type: application/application/json
+content-Type: application/json
 
 {
     "name": "David",
