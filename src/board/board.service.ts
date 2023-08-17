@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable } from "@nestjs/common";
 
 @Injectable()
 export class BoardService {
@@ -43,6 +43,15 @@ export class BoardService {
                 ...this.boards[index],
                 ...data
             };
+        }
+
+        return null;
+    }
+
+    delete(id: number) {
+        const index = this.getBoardId(id);
+        if (index > -1) {
+            return this.boards[index];
         }
 
         return null;
