@@ -1,6 +1,8 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
 import { BoardService } from "./board.service";
+import { ApiTags } from "@nestjs/swagger";
 
+@ApiTags('Board')
 @Controller('board')
 export class BoardController {
   constructor(
