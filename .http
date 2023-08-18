@@ -1,3 +1,7 @@
+GET http://localhost:3000
+
+###
+
 # 게시글 전체 조회
 GET http://localhost:3000/board
 
