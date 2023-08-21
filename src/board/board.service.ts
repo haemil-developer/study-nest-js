@@ -1,9 +1,10 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
-import { CreateBoardDto } from "./dto/create-board.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
+import { CreateBoardDto } from "./dto/create-board.dto";
 import { User } from "../entity/user.entity";
 import { Board } from "../entity/board.entity";
+import { UpdateBoardDto } from "./dto/update-board.dto";
 
 @Injectable()
 export class BoardService {
@@ -15,30 +16,19 @@ export class BoardService {
     ) {
     }
 
-    private boards = [
-        {
-            id: 1,
-            name: 'Dooodly',
-            contents: 'Content 1'
-        },
-        {
-            id: 2,
-            name: 'Alice',
-            contents: 'Content 2'
-        },
-        {
-            id: 3,
-            name: 'Bob',
-            contents: 'Content 3'
-        },
-    ]
-
     async findAll() {
-        return this.boardRepository.find();
+      return this.boardRepository.find();
     }
 
     async find(id: number) {
-        const board = await this.boardRepository.findOneBy({id});
+        const board = await this.boardRepository.findOne({
+            where: {
+                id,
+            },
+            relations: {
+                user: true,
+            },
+        });
 
         if(!board) throw new HttpException('NotFound', HttpStatus.NOT_FOUND);
 
@@ -46,37 +36,28 @@ export class BoardService {
     }
 
     create(data: CreateBoardDto) {
-        const newBoard = { id: this.getNextId(), ...data };
-        this.boards.push(newBoard);
-        return newBoard;
+      return this.boardRepository.save(data);
     }
 
-    update(id: number, data) {
-        const index = this.getBoardId(id);
-        if (index > -1) {   // 존재 한다면
-            this.boards[index] = {
-                ...this.boards[index],
-                ...data
-            };
-        }
+    async update(id: number, data: UpdateBoardDto) {
+      const board = await this.getBoardById(id);
 
-        return null;
+      if (!board) throw new HttpException('NotFound', HttpStatus.NOT_FOUND);
+
+      return this.boardRepository.update(id, {
+        ...data
+      });
     }
 
-    delete(id: number) {
-        const index = this.getBoardId(id);
-        if (index > -1) {
-            return this.boards[index];
-        }
+    async delete(id: number) {
+      const board = await this.getBoardById(id);
 
-        return null;
+      if (!board) throw new HttpException('NotFound', HttpStatus.NOT_FOUND);
+
+      return this.boardRepository.remove(board);
     }
 
-    getBoardId(id: number) {
-        return this.boards.findIndex((board) => board.id === id);
-    }
-
-    getNextId() {
-       return this.boards.sort((a,b) => (b.id - a.id))[0].id + 1;
+    async getBoardById(id: number) {
+      return this.boardRepository.findOneBy({ id });
     }
 }
