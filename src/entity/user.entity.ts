@@ -2,7 +2,7 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { ApiProperty } from "@nestjs/swagger";
 import { Board } from "./board.entity";
 
-@Entity({ name: "user" })
+@Entity()
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
@@ -22,4 +22,7 @@ export class User {
   @ApiProperty({ description: '작성한 게시글' })
   @OneToMany(() => Board, (board) => board.user)
   boards?: Board[]
+
+  @Column({ select: false, nullable: true, insert: false, update: false })
+  boardCount?: number;
 }
