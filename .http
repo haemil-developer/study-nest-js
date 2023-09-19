@@ -13,7 +13,7 @@ GET http://localhost:3000/board/1
 ###
 
 POST http://localhost:3000/board
-content-Type: application/json
+content-type: application/json
 
 {
     "userId": 1,
@@ -23,7 +23,7 @@ content-Type: application/json
 ###
 
 PUT http://localhost:3000/board/3
-content-Type: application/json
+content-type: application/json
 
 {
     "contents": "Contents changed"
@@ -39,3 +39,17 @@ DELETE http://localhost:3000/board/1
 
 # 유저 게시글 가져오기
 GET http://localhost:3000/user
+
+###
+
+# 유저 회원가입
+POST http://localhost:3000/user
+content-type: application/json
+
+{
+  "username": "adminnnn",
+  "name": "charlie",
+  "password": "passwordcha",
+  "email": "admin@emailtest.com",
+  "phoneNumber": "12345678"
+}

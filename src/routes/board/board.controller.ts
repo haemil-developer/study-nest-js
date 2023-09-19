@@ -12,7 +12,7 @@ export class BoardController {
   ) {
   }
 
-  // /board
+  // board
   @Get()
   findAll() {
     return this.boardService.findAll();
